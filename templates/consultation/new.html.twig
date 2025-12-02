@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Consultation{% endblock %}
+
+{% block body %}
+    <h1>Creer une nouvelle Consultation</h1>
+
+    {{ include('consultation/_form.html.twig') }}
+	<a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_dossier_medical_index') }}">Retour à la liste</a>
+
+    {# <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_consultation_index') }}">Retour à la liste</a> #}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateInput = document.getElementById('consultation_dateConsultation');
+            if (dateInput) {
+                dateInput.value = new Date().toISOString().slice(0, 16);
+            }
+        });
+    </script>
+{% endblock %}

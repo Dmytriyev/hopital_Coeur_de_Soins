@@ -1,0 +1,5 @@
+<form class= "mx-auto col-4 mb-4" method="post" action="{{ path('app_consultation_delete', {'id': consultation.id}) }}" onsubmit="return confirm('Vous entez sur de vouloir de suprimer?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ consultation.id) }}">
+    <button class="btn btn-outline-dark btn-primary">Suprimer Consultation</button>
+</form>
+

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prescription{% endblock %}
+
+{% block body %}
+    <h1>Prescription</h1>
+
+    <table class="table">
+        <tbody>
+            {# <tr>
+                <th>Id</th>
+                <td>{{ prescription.id }}</td>
+            </tr> #}
+            <tr>
+                <th>Traitement</th>
+                <td>{{ prescription.traitement }}</td>
+            </tr>
+            <tr>
+                <th>Period</th>
+                <td>{{ prescription.period }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_prescription_index') }}">Retour à la liste</a>
+
+    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_prescription_edit', {'id': prescription.id}) }}">Modifier</a>
+
+    {{ include('prescription/_delete_form.html.twig') }}
+{% endblock %}

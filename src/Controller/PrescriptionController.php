@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Prescription;
+use App\Form\PrescriptionForm;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PrescriptionRepository;
+use App\Repository\DossierMedicalRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+#[IsGranted(new Expression("is_granted('ROLE_ADMIN') or is_granted('ROLE_MEDECIN')"))]
+#[Route('/prescription')]
+final class PrescriptionController extends AbstractController
+{
+    #[Route(name: 'app_prescription_index', methods: ['GET'])]
+    public function index(PrescriptionRepository $prescriptionRepository): Response
+    {
+        return $this->render('prescription/index.html.twig', [
+            'prescriptions' => $prescriptionRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/new/{id}', name: 'app_prescription_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, int $id): Response
+    {
+        $prescription = new Prescription();
+        $form = $this->createForm(PrescriptionForm::class, $prescription, ['id'=>$id]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($prescription);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_prescription_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('prescription/new.html.twig', [
+            'prescription' => $prescription,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_prescription_show', methods: ['GET'])]
+    public function show(Prescription $prescription): Response
+    {
+        return $this->render('prescription/show.html.twig', [
+            'prescription' => $prescription,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_prescription_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Prescription $prescription, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PrescriptionForm::class, $prescription);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_prescription_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('prescription/edit.html.twig', [
+            'prescription' => $prescription,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_prescription_delete', methods: ['POST'])]
+    public function delete(Request $request, Prescription $prescription, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$prescription->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($prescription);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_prescription_index', [], Response::HTTP_SEE_OTHER);
+    }
+}

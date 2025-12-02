@@ -1,0 +1,14 @@
+{{ form_start(form, {'attr': {'class': 'w-50 m-auto border p-3 my-3'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-outline-dark btn-primary col-4 mt-3">{{ button_label|default('Eregistrer') }}</button>
+    {% if form_errors(form) %}
+        <div class="alert alert-danger mt-3" role="alert">
+            <strong>Formulaire invalide !</strong>
+            <ul>
+                {% for error in form_errors(form) %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{{ form_end(form) }}

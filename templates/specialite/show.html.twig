@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Specialite{% endblock %}
+
+{% block body %}
+    <h1>Specialite</h1>
+
+    <table class="table">
+        <tbody>
+            {# <tr>
+                <th>Id</th>
+                <td>{{ specialite.id }}</td>
+            </tr> #}
+            <tr>
+                <th>Nom de specialite</th>
+                <td>{{ specialite.nomSpecialite }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a  class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_specialite_index') }}">Retour à la liste</a>
+
+    <a  class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_specialite_edit', {'id': specialite.id}) }}">Modifier</a>
+
+    {{ include('specialite/_delete_form.html.twig') }}
+{% endblock %}

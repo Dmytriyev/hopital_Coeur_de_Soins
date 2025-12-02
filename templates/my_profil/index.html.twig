@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil
+{% endblock %}
+
+{% block body %}
+	<h1>Mon Profil</h1>
+
+	{% if app.user %}
+		<p>Bienvenue,
+			{{ app.user.prenom }}</p>
+		<p>Nom:
+			{{ app.user.nom }}</p>
+		<p>Prénom:
+			{{ app.user.prenom }}</p>
+		{% if 'ROLE_PERSONEL_ADMINISTRATIF' or 'ROLE_MEDECIN' or 'ROLE_INFERMIER' in app.user.roles %}
+			<p>Identifiant:
+				{{ app.user.matricule }}</p>
+			{% else %}
+		{% endif %}
+		<p>Email:
+			{{ app.user.email }}</p>
+		<p>telephone :
+			{{ app.user.telephone }}</p>
+		<p>Adresse:
+			{{ app.user.adresse }}</p>
+		<p>Date de naissance:
+			{{ app.user.dateNaissance ? app.user.dateNaissance|date('d/m/Y') : 'Non renseignée' }}</p>
+		{% if 'ROLE_PERSONEL_ADMINISTRATIF' or 'ROLE_MEDECIN' or 'ROLE_INFERMIER' in app.user.roles %}
+			<p>poste:
+				{{ app.user.post }}</p>
+			{% else %}
+		{% endif %}
+	{% else %}
+		<p>Vous n'êtes pas connecté.</p>
+	{% endif %}
+    {# <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_profil_edit') }}">Modifier mon profil</a> #}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('my_profil_edit', {id : app.user.id}) }}">Modifier Mon profil</a>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+	<script>
+		// JavaScript code to handle form submission or any other interactivity
+		document.addEventListener('DOMContentLoaded', function() {
+			// Example: Add an event listener to the edit button if needed
+			const editButton = document.querySelector('.btn.btn-outline-dark.btn-primary');
+			if (editButton) {
+				editButton.addEventListener('click', function(event) {
+					// Handle click event
+				});
+			}
+		});
+	</script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dossiers Medicaux
+{% endblock %}
+
+{% block body %}
+	<h1>Dossiers Medicaux</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				{# <th>Id</th> #}
+				<th>Numero de dossier</th>
+				<th>Date de creation</th>
+				<th>Nom de medecin</th>
+				<th>Image</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for dossier_medical in dossier_medicals %}
+				<tr>
+					{# <td>{{ dossier_medical.id }}</td> #}
+					<td>{{ dossier_medical.numeroDossier }}</td>
+					<td>{{ dossier_medical.dateCreation ? dossier_medical.dateCreation|date('d/m/Y H:i') : '' }}</td>
+					<td>{{ dossier_medical.nomMedecin }}</td>
+					<td>
+						{% for image in dossier_medical.images %}
+							<img src="{{ asset('uploads/images/' ~ image.image) }}" alt="{{ image.nom }}" style="width: 100px; height: auto;">
+						{% endfor %}
+					</td>
+					{# <td>{{ dossier_medical.image }}</td> #}
+					<td>
+						<a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_dossier_medical_show', {'id': dossier_medical.id}) }}">Voir</a>
+						<a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_dossier_medical_edit', {'id': dossier_medical.id}) }}">Modifier</a>
+						{# <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_image_new', {'id': dossier_medical.id}) }}">Ajouter une image</a> #}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6">Aucun dosssier en cour</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_dossier_medical_new') }}">Creer</a>
+	<a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_home') }}">Retour à l'accueil</a>
+{% endblock %}

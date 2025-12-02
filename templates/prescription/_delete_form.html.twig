@@ -1,0 +1,4 @@
+<form class= "mx-auto col-4 mb-4" method="post" action="{{ path('app_prescription_delete', {'id': prescription.id}) }}" onsubmit="return confirm('Vous entez sur de vouloir de suprimer?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ prescription.id) }}">
+    <button class="btn btn-outline-dark btn-primary">Supprimer Prescription</button>
+</form>

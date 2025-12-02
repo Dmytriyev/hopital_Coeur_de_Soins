@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RDVs{% endblock %}
+
+{% block body %}
+    <h1>RDVs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nom de patient</th>
+                <th>Nom de medecin</th>
+                <th>Date de rdv</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rdv in rdvs %}
+            <tr>
+                {# <td>{{ rdv.id }}</td> #}
+                <td>{{ rdv.rdvPatient.nom | capitalize }}</td>
+                <td>{{ rdv.rdvMedecin.nom | capitalize }}</td>
+                <td>{{ rdv.dateRdv ? rdv.dateRdv|date('d/m/Y H:i') : '' }}</td>
+                <td>
+                    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_rdv_show', {'id': rdv.id}) }}">Voir</a>
+                    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_rdv_edit', {'id': rdv.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun RDV en cour</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_rdv_new') }}">Ajouter</a>
+    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_home') }}">Retour à l'accueil</a>
+{% endblock %}

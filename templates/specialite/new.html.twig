@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Specialite{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une Specialite</h1>
+
+    {{ include('specialite/_form.html.twig') }}
+
+    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_specialite_index') }}">Retour à la liste</a>
+{% endblock %}

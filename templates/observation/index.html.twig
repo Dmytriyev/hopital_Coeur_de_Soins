@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Observations{% endblock %}
+
+{% block body %}
+    <h1>Observations</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Observation</th>
+                <th>Date de observation</th>
+                {# <th>Matricule</th> #}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for observation in observations %}
+            <tr>
+                {# <td>{{ observation.id }}</td> #}
+                <td>{{ observation.observation }}</td>
+                <td>{{ observation.dateObservation ? observation.dateObservation|date('d/m/Y H:i') : '' }}</td>
+                {# <td>{{ observation.matricule }}</td> #}
+                <td>
+                    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_observation_show', {'id': observation.id}) }}">Voir</a>
+                    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_observation_edit', {'id': observation.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune Observation trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_observation_new') }}">Ajouter</a>
+    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_home') }}">Retour à l'accueil</a>
+{% endblock %}

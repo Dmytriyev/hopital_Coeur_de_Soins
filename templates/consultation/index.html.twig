@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultations{% endblock %}
+
+{% block body %}
+    <h1>Consultations</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Date de consultation</th>
+                <th>Compte rendu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for consultation in consultations %}
+            <tr>
+                {# <td>{{ consultation.id }}</td> #}
+                <td>{{ consultation.dateConsultation ? consultation.dateConsultation|date('d/m/Y H:i') : '' }}</td>
+                <td>{{ consultation.compteRendu }}</td>
+                <td>
+                    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_consultation_show', {'id': consultation.id}) }}">Voir</a>
+                    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_consultation_edit', {'id': consultation.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucune Consultation trouver</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a class="btn btn-outline-dark btn-primary mb-4" href="{{ path('app_consultation_new') }}">Ajouter</a> #}
+    <a class="btn btn-outline-dark btn-primary mb-4" href="{{ path('app_home') }}">Retour à l'accueil</a>
+    {# <a class="btn btn-outline-dark btn-primary mb-4" href="{{ path('app_rdv_index') }}">Voir les RDVs</a> #}
+{% endblock %}

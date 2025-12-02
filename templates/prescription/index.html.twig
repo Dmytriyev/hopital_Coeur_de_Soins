@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prescriptions{% endblock %}
+
+{% block body %}
+    <h1>Prescriptions</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Traitement</th>
+                <th>Period</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for prescription in prescriptions %}
+            <tr>
+                {# <td>{{ prescription.id }}</td> #}
+                <td>{{ prescription.traitement }}</td>
+                <td>{{ prescription.period }}</td>
+                <td>
+                    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_prescription_show', {'id': prescription.id}) }}">Voir</a>
+                    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_prescription_edit', {'id': prescription.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucune prescription en cour</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_prescription_new') }}">Ajouter</a> #}
+    <a class="btn btn-outline-dark btn-primary mb-3"  href="{{ path('app_home') }}">Retour à l'accueil</a>
+{% endblock %}

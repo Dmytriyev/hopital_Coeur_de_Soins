@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>Utilisateurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Email</th>
+                <th>Roles</th>
+                {# <th>Password</th> #}
+                <th>Genre</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Date de naissance</th>
+                <th>Adresse</th>
+                <th>Telephone</th>
+                <th>Matricule</th>
+                <th>Post</th>
+                <th>Numero de secu</th>
+                <th>Telephone de confiance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                {# <td>{{ user.id }}</td> #}
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                {# <td>{{ user.password }}</td> #}
+                <td>{{ user.genre }}</td>
+                <td>{{ user.nom | capitalize }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.dateNaissance ? user.dateNaissance|date('d/m/Y') : '' }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.matricule }}</td>
+                <td>{{ user.post }}</td>
+                <td>{{ user.numeroSecu }}</td>
+                <td>{{ user.telephoneConfiance }}</td>
+                <td>
+                    <a  class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_user_show', {'id': user.id}) }}">Voir</a>
+                    <a  class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">Aucun Utilisateur trouver</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_user_new') }}">Creer</a>
+    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_home') }}">Retour à l'accueil</a>
+{% endblock %}

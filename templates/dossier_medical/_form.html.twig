@@ -1,0 +1,28 @@
+{{ form_start(form, {'attr': {'class': 'w-50 m-auto border p-3 my-3'}}) }}
+{{ form_widget(form) }}
+{# <div data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+	{{ form_widget(form.images) }}
+</div> #}
+<button class="btn btn-outline-dark btn-primary col-4 mt-3" type="submit">{{ button_label|default('Eregistrer') }}</button>
+{{ form_end(form) }}
+
+<script>
+document.addEventListener('turbo:load', () => {
+    if (document.getElementById('add-image-btn')) return;
+    const collectionHolder = document.querySelector('[data-prototype]');
+    const addButton = document.createElement('button');
+    addButton.setAttribute('id', 'add-image-btn');
+    addButton.innerText = 'Ajouter une image';
+    collectionHolder.append(addButton);
+    addButton.addEventListener('click', () => {
+        const prototype = collectionHolder.dataset.prototype;
+        const index = collectionHolder.querySelectorAll('input[type="file"]').length;
+        const newForm = prototype.replace(/__name__/g, index);
+        const div = document.createElement('div');
+        div.innerHTML = newForm;
+        collectionHolder.insertBefore(div, addButton);
+    });
+});
+</script>
+
+

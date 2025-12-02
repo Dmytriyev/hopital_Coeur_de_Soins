@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel RDV{% endblock %}
+
+{% block body %}
+    <h1>Create un RDV</h1>
+
+    {{ include('rdv/_form.html.twig') }}
+
+    <a class="btn btn-outline-dark btn-primary mb-3" href="{{ path('app_rdv_index') }}">Retour à la liste</a>
+{% endblock %}
